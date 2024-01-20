@@ -6,7 +6,6 @@ resource "google_compute_instance" "default" {
   #checkov:skip=CKV_GCP_36  
   #checkov:skip=CKV_GCP_38
   #checkov:skip=CKV_GCP_39  
-  #checkov:skip=CKV_GCP_40
 
   name         = "test-instance"
   machine_type = "f1-micro"
