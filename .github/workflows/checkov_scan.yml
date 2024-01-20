@@ -1,1 +1,29 @@
-# Checkov GitHub Actions Workflow
+name: Checkov Terraform Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  checkov_scan:
+    runs-on: ubuntu-latest
+    name: Run Checkov against Terraform GCP configurations
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Checkov
+      run: pip install checkov
+
+    - name: Run Checkov scan
+      run: checkov -d .
