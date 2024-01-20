@@ -1,0 +1,29 @@
+name: Terrascan Terraform Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  terrascan_scan:
+    runs-on: ubuntu-latest
+    name: Run Terrascan on Terraform configurations
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Terrascan
+      run: |
+        curl -L "$(curl -s https://api.github.com/repos/accurics/terrascan/releases/latest | grep -o -E "https://.+?linux_amd64.tar.gz")" | tar -xz
+        sudo mv terrascan /usr/local/bin
+
+    - name: Run Terrascan scan
+      run: terrascan scan -i terraform

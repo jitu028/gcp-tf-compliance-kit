@@ -1,0 +1,29 @@
+name: tfsec Terraform Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  tfsec_scan:
+    runs-on: ubuntu-latest
+    name: Run tfsec on Terraform configurations
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install tfsec
+      run: |
+        curl -L "$(curl -s https://api.github.com/repos/aquasecurity/tfsec/releases/latest | grep -o -E "https://.+?linux_amd64.tar.gz")" | tar -xz
+        sudo mv tfsec /usr/local/bin
+
+    - name: Run tfsec scan
+      run: tfsec .
