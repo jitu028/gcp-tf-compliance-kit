@@ -1,9 +1,3 @@
-# Main Terraform file for GCP resources
-provider "google" {
-  project = var.project_id
-  region  = var.region
-}
-
 resource "google_compute_instance" "default" {
   #checkov:skip=CKV_GCP_31  
   #checkov:skip=CKV_GCP_32  
